@@ -1,0 +1,12 @@
+diff -up asmc-master/source/asmc/makefile.omv~ asmc-master/source/asmc/makefile
+--- asmc-master/source/asmc/makefile.omv~	2025-01-04 22:38:37.661428800 +0100
++++ asmc-master/source/asmc/makefile	2025-01-04 22:38:52.661194712 +0100
+@@ -30,7 +30,7 @@ ifdef YACC
+ ifdef LIBC
+ link += -static -nostdlib -l:libasmc.a -Wl,-no-pie,-z,now,-z,noexecstack
+ else
+-link += -Wl,-pie,-z,now,-z,noexecstack
++link += -Wl,-z,now,-z,noexecstack
+ flags += -fpic
+ endif
+ else
