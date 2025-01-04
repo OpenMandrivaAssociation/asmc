@@ -19,15 +19,18 @@ MASM compatible x86 macro assembler
 
 %prep
 %autosetup -p1 -n %{name}-master
+# Fix "make install" target
+sed -i -e 's,sudo ,,g;s,/usr,$(DESTDIR)%{_prefix},g;s,/etc,$(DESTDIR)%{_sysconfdir},g' source/asmc/makefile
 
 %build
 %make_build -j1 -C source/asmc
 
 %install
-mkdir -p %{buildroot}%{_bindir}
-install -cD -m 755 source/asmc/asmc %{buildroot}%{_bindir}/
-install -cD -m 755 source/asmc/asmc64 %{buildroot}%{_bindir}/
+mkdir -p %{buildroot}%{_bindir} %{buildroot}%{_prefix}/lib %{buildroot}%{_sysconfdir}/profile.d
+%make_install -C source/asmc
 
 %files
 %{_bindir}/asmc
 %{_bindir}/asmc64
+%{_prefix}/lib/asmc
+%{_sysconfdir}/profile.d/asmc-profile.sh
